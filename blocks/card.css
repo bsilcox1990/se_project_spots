@@ -4,6 +4,10 @@
   font-size: 20px;
   line-height: 1.2;
   color: #212121;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 340px;
 }
 
 .card__image {
@@ -38,5 +42,9 @@
   .card__image {
     width: 288px;
     height: 288px;
+  }
+
+  .card__title {
+    max-width: 230px;
   }
 }
