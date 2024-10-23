@@ -1,9 +1,9 @@
-.card {
-  width: 413px;
-}
-
 .card__title {
   margin: 12px 0 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #212121;
 }
 
 .card__image {
@@ -11,6 +11,7 @@
   height: 413px;
   width: 413px;
   object-fit: cover;
+  border-radius: 5px;
 }
 
 .card__content {
@@ -27,4 +28,15 @@
   opacity: 40%;
   padding: 0;
   margin: 12px 0 0;
+}
+
+.card__like-button:hover {
+  opacity: 100%;
+}
+
+@media screen and (max-width: 627px) {
+  .card__image {
+    width: 288px;
+    height: 288px;
+  }
 }
