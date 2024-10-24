@@ -22,4 +22,8 @@
   .cards {
     padding-bottom: 20px;
   }
+
+  .cards__list {
+    row-gap: 20px;
+  }
 }
