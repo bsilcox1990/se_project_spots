@@ -65,11 +65,11 @@ function fillProfileForm() {
 
 function openModal() {
   fillProfileForm();
-  editModal.classList.add("modal-opened");
+  editModal.classList.add("modal_opened");
 }
 
 function closeModal() {
-  editModal.classList.remove("modal-opened");
+  editModal.classList.remove("modal_opened");
 }
 
 profileEditButton.addEventListener("click", openModal);
