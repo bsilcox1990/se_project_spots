@@ -54,6 +54,7 @@
   width: 107.34px;
   height: 16px;
   cursor: pointer;
+  transition: 0.5s ease;
 }
 
 .profile__edit-button:hover {
@@ -72,6 +73,7 @@
   border: none;
   font-weight: 500;
   cursor: pointer;
+  transition: 0.5s ease;
 }
 
 .profile__new-button:hover {

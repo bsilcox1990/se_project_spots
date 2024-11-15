@@ -58,14 +58,18 @@ function handleProfileFormSubmit(evt) {
   closeModal();
 }
 
-function openModal() {
+function fillProfileForm() {
   modalNameInput.value = profileName.textContent;
   modalDescriptionInput.value = profileDescription.textContent;
-  editModal.classList.add("modal__opened");
+}
+
+function openModal() {
+  fillProfileForm();
+  editModal.classList.add("modal-opened");
 }
 
 function closeModal() {
-  editModal.classList.remove("modal__opened");
+  editModal.classList.remove("modal-opened");
 }
 
 profileEditButton.addEventListener("click", openModal);

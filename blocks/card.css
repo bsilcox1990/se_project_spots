@@ -33,6 +33,7 @@
   padding: 0;
   margin: 12px 0 0;
   cursor: pointer;
+  transition: 0.5s ease;
 }
 
 .card__like-button:hover {
@@ -56,5 +57,6 @@
   .card__like-button {
     width: 20px;
     height: 18px;
+    background-size: 20px 18px;
   }
 }
