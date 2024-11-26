@@ -50,10 +50,22 @@ function getCardElement(data) {
     .cloneNode(true);
 
   const cardNameElement = cardElement.querySelector(".card__title");
-  cardNameElement.textContent = data.name;
   const cardLinkElement = cardElement.querySelector(".card__image");
+  const cardLikeButton = cardElement.querySelector(".card__like-button");
+  const cardDeleteButton = cardElement.querySelector(".card__delete-button");
+
+  cardNameElement.textContent = data.name;
   cardLinkElement.src = data.link;
   cardLinkElement.alt = data.name + " image";
+
+  cardLikeButton.addEventListener("click", () => {
+    cardLikeButton.classList.toggle("card__like-button_liked");
+  });
+
+  cardDeleteButton.addEventListener("click", () => {
+    cardElement.remove(cardElement);
+  });
+
   return cardElement;
 }
 
