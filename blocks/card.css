@@ -26,14 +26,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
 }
 
 .card__delete-button {
-  background-image: url(../images/delete-button.svg);
-
-  background-color: rgba(0, 0, 0, 0.3);
-
+  background: transparent url(../images/delete-button.svg) center no-repeat;
   border-radius: 50%;
   border: none;
   height: 32px;
