@@ -23,12 +23,22 @@ const initialCards = [
     name: "Mountain house",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
   },
+  {
+    name: "Golden gate bridge",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+  },
 ];
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileNewButton = document.querySelector(".profile__new-button");
 const addModal = document.querySelector("#add-modal");
 const addModalCloseButton = addModal.querySelector(".modal__close-button");
+const popupModal = document.querySelector("#popup-modal");
+const popupModalCloseButton = popupModal.querySelector(
+  ".modal__close-button_type_preview"
+);
+const modalImage = popupModal.querySelector(".modal__image");
+const modalCaption = popupModal.querySelector(".modal__caption");
 const editModal = document.querySelector("#edit-modal");
 const editModalCloseButton = editModal.querySelector(".modal__close-button");
 const profileName = document.querySelector(".profile__name");
@@ -57,6 +67,13 @@ function getCardElement(data) {
   cardNameElement.textContent = data.name;
   cardLinkElement.src = data.link;
   cardLinkElement.alt = data.name + " image";
+
+  cardLinkElement.addEventListener("click", () => {
+    modalImage.src = data.link;
+    modalImage.alt = data.name + " image";
+    modalCaption.textContent = data.name;
+    openModal(popupModal);
+  });
 
   cardLikeButton.addEventListener("click", () => {
     cardLikeButton.classList.toggle("card__like-button_liked");
@@ -113,6 +130,10 @@ editModalCloseButton.addEventListener("click", () => {
 
 addModalCloseButton.addEventListener("click", () => {
   closeModal(addModal);
+});
+
+popupModalCloseButton.addEventListener("click", () => {
+  closeModal(popupModal);
 });
 
 editFormElement.addEventListener("submit", handleEditProfileFormSubmit);
