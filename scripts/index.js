@@ -37,8 +37,8 @@ const popupModal = document.querySelector("#popup-modal");
 const popupModalCloseButton = popupModal.querySelector(
   ".modal__close-button_type_preview"
 );
-const modalImage = popupModal.querySelector(".modal__image");
-const modalCaption = popupModal.querySelector(".modal__caption");
+const popupModalImage = popupModal.querySelector(".modal__image");
+const popupModalCaption = popupModal.querySelector(".modal__caption");
 const editModal = document.querySelector("#edit-modal");
 const editModalCloseButton = editModal.querySelector(".modal__close-button");
 const profileName = document.querySelector(".profile__name");
@@ -69,9 +69,23 @@ function getCardElement(data) {
   cardLinkElement.alt = data.name + " image";
 
   cardLinkElement.addEventListener("click", () => {
-    modalImage.src = data.link;
-    modalImage.alt = data.name + " image";
-    modalCaption.textContent = data.name;
+    popupModalImage.src = data.link;
+    popupModalImage.alt = data.name + " image";
+    popupModalCaption.textContent = data.name;
+
+    popupModalImage.onload = function () {
+      popupModalImage.classList.remove(
+        "modal__image_type_landscape",
+        "modal__image_type_portrait"
+      );
+
+      if (this.width > this.height) {
+        popupModalImage.classList.add("modal__image_type_landscape");
+      } else {
+        popupModalImage.classList.add("modal__image_type_portrait");
+      }
+    };
+
     openModal(popupModal);
   });
 
