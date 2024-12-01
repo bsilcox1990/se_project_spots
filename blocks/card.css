@@ -48,7 +48,7 @@
 }
 
 .card__like-button {
-  background-image: url(../images/heart.svg);
+  background: transparent url(../images/heart.svg) center no-repeat;
   width: 23px;
   height: 20px;
   border: none;
@@ -64,12 +64,15 @@
 }
 
 .card__like-button_liked {
-  background-image: url(../images/like-button-liked.svg);
+  background: #fcf5e5 url(../images/like-button-liked.svg) center no-repeat;
+  mix-blend-mode: darken;
+  border: none;
   opacity: 1;
 }
 
 .card__like-button_liked:hover {
-  background-image: url(../images/like-button-liked-hover.svg);
+  background: transparent url(../images/like-button-liked-hover.svg) center
+    no-repeat;
 }
 
 @media screen and (max-width: 627px) {
