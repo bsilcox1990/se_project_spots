@@ -105,9 +105,11 @@ function handleEditProfileFormSubmit(evt) {
 
 function handleAddProfileFormSubmit(evt) {
   evt.preventDefault();
-  evt.target.reset();
+
   const inputValues = { name: addCaptionInput.value, link: addLinkInput.value };
   renderCard(inputValues);
+
+  evt.target.reset();
 
   closeModal(addModal);
 }
