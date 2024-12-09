@@ -97,14 +97,14 @@ function getCardElement(data) {
 }
 
 function handleEditProfileFormSubmit(evt) {
-  evt.preventDefault();
+  //evt.preventDefault();
   profileName.textContent = modalNameInput.value;
   profileDescription.textContent = modalDescriptionInput.value;
   closeModal(editModal);
 }
 
 function handleAddProfileFormSubmit(evt) {
-  evt.preventDefault();
+  //evt.preventDefault();
 
   const inputValues = { name: addCaptionInput.value, link: addLinkInput.value };
   renderCard(inputValues);
