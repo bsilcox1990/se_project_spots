@@ -135,6 +135,10 @@
   opacity: 80%;
 }
 
+.modal__submit-button_disabled {
+  opacity: 0.5;
+}
+
 .modal__close-button {
   position: absolute;
   top: 32px;
