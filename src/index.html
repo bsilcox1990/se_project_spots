@@ -9,19 +9,23 @@
     />
     <meta name="keywords" content="Photos, Sharing, Liking, Profile" />
     <meta name="author" content="Bradley Silcox" />
-    <link rel="stylesheet" href="./pages/index.css" />
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <!--<link rel="stylesheet" href="./pages/index.css" />-->
+    <!--<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />-->
     <title>Spots</title>
   </head>
   <body>
     <div class="page">
       <header class="header">
-        <img src="./images/logo.svg" alt="spot logo" class="header__logo" />
+        <img
+          src="<%=require('./images/logo.svg')%>"
+          alt="spot logo"
+          class="header__logo"
+        />
       </header>
       <main class="content">
         <section class="profile page__section">
           <img
-            src="./images/avatar.jpg"
+            src="<%=require('./images/avatar.jpg')%>"
             alt="female airline pilot bessie coleman"
             class="profile__avatar"
           />
@@ -29,14 +33,17 @@
             <h1 class="profile__name">Bessie Coleman</h1>
             <p class="profile__description">Civil Aviator</p>
             <button type="button" class="profile__edit-button">
-              <img src="./images/pencil.svg" alt="picture of a pencil" /> Edit
-              profile
+              <img
+                src="<%=require('./images/pencil.svg')%>"
+                alt="picture of a pencil"
+              />
+              Edit profile
             </button>
           </div>
           <button type="button" class="profile__new-button">
             <img
               class="profile__button-image"
-              src="./images/plus.svg"
+              src="<%=require('./images/plus.svg')%>"
               alt="plus symbol"
             />
             New Post
@@ -142,7 +149,7 @@
         </div>
       </div>
     </div>
-    <script defer src="./scripts/index.js"></script>
-    <script defer src="./scripts/validation.js"></script>
+    <!--<script type="module" src="./scripts/index.js"></script>
+    <script defer src="./scripts/validation.js"></script>-->
   </body>
 </html>

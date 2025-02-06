@@ -1,3 +1,12 @@
+import {
+  settings,
+  disableButton,
+  enableValidation,
+  resetValidation,
+} from "../scripts/validation.js";
+
+import "./index.css";
+
 const initialCards = [
   {
     name: "Val Thorens",
@@ -174,3 +183,5 @@ function renderCard(card, method = "prepend") {
 initialCards.forEach((card) => {
   renderCard(card);
 });
+
+enableValidation(settings);
