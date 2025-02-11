@@ -75,8 +75,8 @@ const editModalSubmitButton = editModal.querySelector(".modal__submit-button");
 //card stuff
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
-let selectedCard;
-let selectedCardId;
+
+let selectedCard, selectedCardId;
 
 //delete card stuff
 const deleteModal = document.querySelector("#delete-modal");
@@ -117,6 +117,10 @@ function getCardElement(data) {
   const cardLikeButton = cardElement.querySelector(".card__like-button");
   const cardDeleteButton = cardElement.querySelector(".card__delete-button");
 
+  if (data.isLiked) {
+    cardLikeButton.classList.toggle("card__like-button_liked");
+  }
+
   cardNameElement.textContent = data.name;
   cardLinkElement.src = data.link;
   cardLinkElement.alt = data.name + " image";
@@ -142,8 +146,8 @@ function getCardElement(data) {
     openModal(popupModal);
   });
 
-  cardLikeButton.addEventListener("click", () => {
-    cardLikeButton.classList.toggle("card__like-button_liked");
+  cardLikeButton.addEventListener("click", (evt) => {
+    handleLikeButton(evt, data._id);
   });
 
   cardDeleteButton.addEventListener("click", (evt) =>
@@ -151,6 +155,19 @@ function getCardElement(data) {
   );
 
   return cardElement;
+}
+
+function handleLikeButton(evt, id) {
+  const isLiked = evt.isLiked;
+
+  api
+    .toggleLike(id, isLiked)
+    .then(() => {
+      evt.target.classList.toggle("card__like-button_liked");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
 function handleDeleteCard(cardElement, data) {
@@ -195,8 +212,8 @@ function handleAddProfileFormSubmit(evt) {
   const inputValues = { name: addCaptionInput.value, link: addLinkInput.value };
   api
     .addNewcard(inputValues)
-    .then(() => {
-      renderCard(inputValues);
+    .then((data) => {
+      renderCard(data);
       evt.target.reset();
       disableButton(addModalSubmitButton, settings);
       closeModal(addModal);
