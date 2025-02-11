@@ -6,7 +6,9 @@ import {
 } from "../scripts/validation.js";
 
 import "./index.css";
+import Api from "../utils/Api.js";
 
+/*
 const initialCards = [
   {
     name: "Val Thorens",
@@ -37,7 +39,7 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
   },
 ];
-
+*/
 const modals = document.querySelectorAll(".modal");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileNewButton = document.querySelector(".profile__new-button");
@@ -61,6 +63,29 @@ const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
 const addModalSubmitButton = addModal.querySelector(".modal__submit-button");
 const editModalSubmitButton = editModal.querySelector(".modal__submit-button");
+const profileAvatar = document.querySelector(".profile__avatar");
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "688c9307-1ad5-4d00-8cf7-8ff6067c0470",
+    "Content-Type": "application/json",
+  },
+});
+
+api
+  .getAppInfo()
+  .then(([cards, user]) => {
+    cards.forEach((card) => {
+      renderCard(card);
+    });
+    profileAvatar.src = user.avatar;
+    profileName.textContent = user.name;
+    profileDescription.textContent = user.about;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 function getCardElement(data) {
   const cardElement = cardTemplate.content
@@ -108,17 +133,25 @@ function getCardElement(data) {
   return cardElement;
 }
 
-function handleEditProfileFormSubmit(evt) {
-  profileName.textContent = modalNameInput.value;
-  profileDescription.textContent = modalDescriptionInput.value;
-  disableButton(editModalSubmitButton, settings);
-  closeModal(editModal);
+function handleEditProfileFormSubmit() {
+  api
+    .editUserInfo({
+      name: modalNameInput.value,
+      about: modalDescriptionInput.value,
+    })
+    .then((data) => {
+      profileName.textContent = data.name;
+      profileDescription.textContent = data.about;
+      disableButton(editModalSubmitButton, settings);
+      closeModal(editModal);
+    })
+    .catch((err) => console.error(err));
 }
 
 function handleAddProfileFormSubmit(evt) {
   const inputValues = { name: addCaptionInput.value, link: addLinkInput.value };
-  renderCard(inputValues);
 
+  renderCard(inputValues);
   evt.target.reset();
   disableButton(addModalSubmitButton, settings);
   closeModal(addModal);
@@ -180,8 +213,10 @@ function renderCard(card, method = "prepend") {
   cardsList[method](cardElement);
 }
 
+/*
 initialCards.forEach((card) => {
   renderCard(card);
 });
+*/
 
 enableValidation(settings);
