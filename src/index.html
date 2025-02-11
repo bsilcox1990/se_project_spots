@@ -162,6 +162,25 @@
           ></button>
         </div>
       </div>
+      <div class="modal modal_opened">
+        <div class="modal__container">
+          <button class="modal__close-button"></button>
+          <h2 class="modal__title">Edit profile avatar</h2>
+          <form name="edit-avatar" class="modal__form" novalidate>
+            <label for="avatar-link-input" class="modal__label">
+              Profile picture
+              <input
+                id="avatar-link-input"
+                type="url"
+                class="modal__input"
+                required
+                placeholder="Paste the link to an image"
+              />
+            </label>
+          </form>
+          <button class="modal__submit-button">Save</button>
+        </div>
+      </div>
     </div>
     <!--<script type="module" src="./scripts/index.js"></script>
     <script defer src="./scripts/validation.js"></script>-->
