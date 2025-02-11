@@ -57,6 +57,10 @@
   background-color: transparent;
 }
 
+.modal__container_type_delete {
+  max-width: 630px;
+}
+
 .modal__caption {
   background-color: #212121;
   color: #fff;
@@ -77,6 +81,10 @@
   font-weight: 500;
   font-size: 32px;
   line-height: 1;
+}
+
+.modal__title_type_delete {
+  font-size: 24px;
 }
 
 .modal__label {
@@ -135,6 +143,40 @@
   transition: opacity 0.5s ease;
 }
 
+.modal__buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 16px;
+}
+
+.modal__delete-confirm {
+  width: 156px;
+  border: none;
+  padding: 18px 49px;
+  background-color: #ff6565;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal__delete-confirm:hover {
+  background-color: #ff3333;
+}
+
+.modal__cancel-confirm {
+  width: 156px;
+  border: 1px solid rgb(33, 33, 33);
+  padding: 18px 49px;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.modal__cancel-confirm:hover {
+  background-color: #212121;
+  color: #fff;
+}
+
 .modal__submit-button:hover {
   opacity: 80%;
 }
@@ -168,6 +210,14 @@
   opacity: 1;
   height: 23px;
   width: 23px;
+}
+
+.modal__close-button_type_delete {
+  background-image: url(../images/close-icon-white.svg);
+  position: absolute;
+  opacity: 1;
+  right: -52px;
+  top: 1px;
 }
 
 .modal__close-button_type_preview:hover {
