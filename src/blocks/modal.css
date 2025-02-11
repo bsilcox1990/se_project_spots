@@ -150,31 +150,18 @@
   font-size: 16px;
 }
 
-.modal__delete-confirm {
+.modal__submit-button_type_delete {
   width: 156px;
-  border: none;
   padding: 18px 49px;
   background-color: #ff6565;
-  border-radius: 8px;
-  cursor: pointer;
+  color: #212121;
 }
 
-.modal__delete-confirm:hover {
-  background-color: #ff3333;
-}
-
-.modal__cancel-confirm {
-  width: 156px;
+.modal__submit-button_type_cancel {
   border: 1px solid rgb(33, 33, 33);
   padding: 18px 49px;
-  border-radius: 8px;
   background-color: #fff;
-  cursor: pointer;
-}
-
-.modal__cancel-confirm:hover {
-  background-color: #212121;
-  color: #fff;
+  color: #212121;
 }
 
 .modal__submit-button:hover {
@@ -187,6 +174,17 @@
 
 .modal__submit-button_disabled:hover {
   opacity: 0.5;
+}
+
+.modal__submit-button_type_cancel:hover {
+  background-color: #212121;
+  color: #fff;
+  opacity: 1;
+}
+
+.modal__submit-button_type_delete:hover {
+  background-color: #ff3333;
+  opacity: 1;
 }
 
 .modal__close-button {

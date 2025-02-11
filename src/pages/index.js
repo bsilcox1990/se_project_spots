@@ -40,30 +40,50 @@ const initialCards = [
   },
 ];
 */
+//all modals
 const modals = document.querySelectorAll(".modal");
+const closeButtons = document.querySelectorAll(".modal__close-button");
+
+//profile stuff
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileNewButton = document.querySelector(".profile__new-button");
-const addModal = document.querySelector("#add-modal");
-const popupModal = document.querySelector("#popup-modal");
-const closeButtons = document.querySelectorAll(".modal__close-button");
-const popupModalImage = popupModal.querySelector(".modal__image");
-const popupModalCaption = popupModal.querySelector(".modal__caption");
-const editModal = document.querySelector("#edit-modal");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
+const profileAvatar = document.querySelector(".profile__avatar");
+
+//preview window modal
+const popupModal = document.querySelector("#popup-modal");
+const popupModalImage = popupModal.querySelector(".modal__image");
+const popupModalCaption = popupModal.querySelector(".modal__caption");
+
+//add new card stuff
+const addModal = document.querySelector("#add-modal");
+const addFormElement = document.forms["new-post"];
+const addLinkInput = addModal.querySelector("#add-image-link-input");
+const addCaptionInput = addModal.querySelector("#add-caption-input");
+const addModalSubmitButton = addModal.querySelector(".modal__submit-button");
+
+//edit profile stuff
+const editModal = document.querySelector("#edit-modal");
 const modalNameInput = editModal.querySelector("#profile-name-input");
 const modalDescriptionInput = editModal.querySelector(
   "#profile-description-input"
 );
 const editFormElement = document.forms["edit-profile"];
-const addFormElement = document.forms["new-post"];
-const addLinkInput = addModal.querySelector("#add-image-link-input");
-const addCaptionInput = addModal.querySelector("#add-caption-input");
+const editModalSubmitButton = editModal.querySelector(".modal__submit-button");
+
+//card stuff
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
-const addModalSubmitButton = addModal.querySelector(".modal__submit-button");
-const editModalSubmitButton = editModal.querySelector(".modal__submit-button");
-const profileAvatar = document.querySelector(".profile__avatar");
+let selectedCard;
+let selectedCardId;
+
+//delete card stuff
+const deleteModal = document.querySelector("#delete-modal");
+const cancelDeleteButton = document.querySelector(
+  ".modal__submit-button_type_cancel"
+);
+const deleteForm = document.forms["delete-card"];
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -126,12 +146,35 @@ function getCardElement(data) {
     cardLikeButton.classList.toggle("card__like-button_liked");
   });
 
-  cardDeleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
+  cardDeleteButton.addEventListener("click", (evt) =>
+    handleDeleteCard(cardElement, data)
+  );
 
   return cardElement;
 }
+
+function handleDeleteCard(cardElement, data) {
+  selectedCard = cardElement;
+  selectedCardId = data._id;
+  openModal(deleteModal);
+}
+
+function handleDeleteSubmit() {
+  api
+    .deleteCard(selectedCardId)
+    .then(() => {
+      selectedCard.remove();
+      closeModal(deleteModal);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+deleteForm.addEventListener("submit", handleDeleteSubmit);
+cancelDeleteButton.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
 
 function handleEditProfileFormSubmit() {
   api

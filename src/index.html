@@ -153,16 +153,28 @@
           <h2 class="modal__title modal__title_type_delete">
             Are you sure you want to delete this image?
           </h2>
-          <div class="modal__buttons-container">
-            <button type="submit" class="modal__delete-confirm">Delete</button>
-            <button type="button" class="modal__cancel-confirm">Cancel</button>
-          </div>
+          <form name="delete-card" class="modal__form" novalidate>
+            <div class="modal__buttons-container">
+              <button
+                type="submit"
+                class="modal__submit-button modal__submit-button_type_delete"
+              >
+                Delete
+              </button>
+              <button
+                type="button"
+                class="modal__submit-button modal__submit-button_type_cancel"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
           <button
             class="modal__close-button modal__close-button_type_delete"
           ></button>
         </div>
       </div>
-      <div class="modal modal_opened">
+      <div class="modal">
         <div class="modal__container">
           <button class="modal__close-button"></button>
           <h2 class="modal__title">Edit profile avatar</h2>
@@ -176,9 +188,10 @@
                 required
                 placeholder="Paste the link to an image"
               />
+              <span class="modal__error" id="avatar-link-input-error"></span>
             </label>
+            <button type="submit" class="modal__submit-button">Save</button>
           </form>
-          <button class="modal__submit-button">Save</button>
         </div>
       </div>
     </div>
