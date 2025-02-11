@@ -150,11 +150,15 @@ function handleEditProfileFormSubmit() {
 
 function handleAddProfileFormSubmit(evt) {
   const inputValues = { name: addCaptionInput.value, link: addLinkInput.value };
-
-  renderCard(inputValues);
-  evt.target.reset();
-  disableButton(addModalSubmitButton, settings);
-  closeModal(addModal);
+  api
+    .addNewcard(inputValues)
+    .then(() => {
+      renderCard(inputValues);
+      evt.target.reset();
+      disableButton(addModalSubmitButton, settings);
+      closeModal(addModal);
+    })
+    .catch((err) => console.log(err));
 }
 
 function fillProfileForm() {
