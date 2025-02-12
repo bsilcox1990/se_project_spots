@@ -7,6 +7,7 @@ import {
 
 import "./index.css";
 import Api from "../utils/Api.js";
+import { setButtonText } from "../utils/helpers.js";
 
 /*
 const initialCards = [
@@ -87,10 +88,13 @@ const cardsList = document.querySelector(".cards__list");
 
 //delete card stuff
 const deleteModal = document.querySelector("#delete-modal");
-const cancelDeleteButton = document.querySelector(
-  ".modal__submit-button_type_cancel"
+const deleteModalSubmitButton = deleteModal.querySelector(
+  ".modal__submit-button"
 );
 const deleteForm = document.forms["delete-card"];
+const deleteModalCancelButton = deleteModal.querySelector(
+  ".modal__submit-button_type_cancel"
+);
 
 let selectedCard, selectedCardId;
 
@@ -173,6 +177,7 @@ editAvatarButton.addEventListener("click", () => {
 editAvatarForm.addEventListener("submit", (evt) => handleAvatarSubmit(evt));
 
 function handleAvatarSubmit(evt) {
+  setButtonText(editAvatarSubmitButton, true);
   api
     .editAvatar(editAvatarInput.value)
     .then((data) => {
@@ -183,6 +188,9 @@ function handleAvatarSubmit(evt) {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      setButtonText(editAvatarSubmitButton, false);
     });
 }
 
@@ -206,6 +214,7 @@ function handleDeleteCard(cardElement, data) {
 }
 
 function handleDeleteSubmit() {
+  setButtonText(deleteModalSubmitButton, true, "Delete", "Deleting...");
   api
     .deleteCard(selectedCardId)
     .then(() => {
@@ -214,16 +223,20 @@ function handleDeleteSubmit() {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      setButtonText(deleteModalSubmitButton, false, "Delete");
     });
 }
 
 deleteForm.addEventListener("submit", handleDeleteSubmit);
 
-cancelDeleteButton.addEventListener("click", () => {
+deleteModalCancelButton.addEventListener("click", () => {
   closeModal(deleteModal);
 });
 
 function handleEditProfileFormSubmit() {
+  setButtonText(editModalSubmitButton, true);
   api
     .editUserInfo({
       name: modalNameInput.value,
@@ -235,11 +248,15 @@ function handleEditProfileFormSubmit() {
       disableButton(editModalSubmitButton, settings);
       closeModal(editModal);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err))
+    .finally(() => {
+      setButtonText(editModalSubmitButton, false);
+    });
 }
 
 function handleAddProfileFormSubmit(evt) {
   const inputValues = { name: addCaptionInput.value, link: addLinkInput.value };
+  setButtonText(addModalSubmitButton, true);
   api
     .addNewcard(inputValues)
     .then((data) => {
@@ -248,7 +265,10 @@ function handleAddProfileFormSubmit(evt) {
       disableButton(addModalSubmitButton, settings);
       closeModal(addModal);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      setButtonText(addModalSubmitButton, false);
+    });
 }
 
 function fillProfileForm() {
