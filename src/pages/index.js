@@ -49,7 +49,16 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const profileNewButton = document.querySelector(".profile__new-button");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
+
+//avatar stuff
 const profileAvatar = document.querySelector(".profile__avatar");
+const editAvatarButton = document.querySelector(".profile__avatar-button");
+const editAvatarModal = document.querySelector("#edit-avatar");
+const editAvatarForm = document.forms["edit-avatar"];
+const editAvatarInput = editAvatarModal.querySelector("#avatar-link-input");
+const editAvatarSubmitButton = editAvatarModal.querySelector(
+  ".modal__submit-button"
+);
 
 //preview window modal
 const popupModal = document.querySelector("#popup-modal");
@@ -76,14 +85,14 @@ const editModalSubmitButton = editModal.querySelector(".modal__submit-button");
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
 
-let selectedCard, selectedCardId;
-
 //delete card stuff
 const deleteModal = document.querySelector("#delete-modal");
 const cancelDeleteButton = document.querySelector(
   ".modal__submit-button_type_cancel"
 );
 const deleteForm = document.forms["delete-card"];
+
+let selectedCard, selectedCardId;
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -157,6 +166,26 @@ function getCardElement(data) {
   return cardElement;
 }
 
+editAvatarButton.addEventListener("click", () => {
+  openModal(editAvatarModal);
+});
+
+editAvatarForm.addEventListener("submit", (evt) => handleAvatarSubmit(evt));
+
+function handleAvatarSubmit(evt) {
+  api
+    .editAvatar(editAvatarInput.value)
+    .then((data) => {
+      profileAvatar.src = data.avatar;
+      evt.target.reset();
+      disableButton(editAvatarSubmitButton, settings);
+      closeModal(editAvatarModal);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
 function handleLikeButton(evt, id) {
   const isLiked = evt.isLiked;
 
@@ -189,6 +218,7 @@ function handleDeleteSubmit() {
 }
 
 deleteForm.addEventListener("submit", handleDeleteSubmit);
+
 cancelDeleteButton.addEventListener("click", () => {
   closeModal(deleteModal);
 });
