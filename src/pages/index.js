@@ -110,7 +110,7 @@ api
   .getAppInfo()
   .then(([cards, user]) => {
     cards.forEach((card) => {
-      renderCard(card);
+      renderCard(card, "append");
     });
     profileAvatar.src = user.avatar;
     profileName.textContent = user.name;

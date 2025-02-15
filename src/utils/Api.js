@@ -4,34 +4,61 @@ export default class Api {
     this._headers = headers;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
+  }
+
+  _request({ url, options }) {
+    return fetch(url, options).then(this._checkResponse);
+  }
+
   getAppInfo() {
     return Promise.all([this.getInitialCards(), this.getUserInfo()]);
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+    /* return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     }).then((res) => {
       if (res.ok) {
         return res.json();
       }
       return Promise.reject(`Error: ${res.status}`);
+    }); */
+    return this._request({
+      url: `${this._baseUrl}/cards`,
+      options: { headers: this._headers },
     });
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._request({
+      url: `${this._baseUrl}/users/me`,
+      options: { headers: this._headers },
+    });
+    /* return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     }).then((res) => {
       if (res.ok) {
         return res.json();
       }
       return Promise.reject(`Error: ${res.status}`);
-    });
+    }); */
   }
 
   editUserInfo({ name, about }) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._request({
+      url: `${this._baseUrl}/users/me`,
+      options: {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({ name, about }),
+      },
+    });
+    /* return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -43,11 +70,19 @@ export default class Api {
         return res.json();
       }
       return Promise.reject(`Error: ${res.status}`);
-    });
+    }); */
   }
 
   editAvatar(avatar) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return this._request({
+      url: `${this._baseUrl}/users/me/avatar`,
+      options: {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({ avatar }),
+      },
+    });
+    /* return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -58,11 +93,19 @@ export default class Api {
         return res.json();
       }
       return Promise.reject(`Error: ${res.status}`);
-    });
+    }); */
   }
 
   addNewcard({ name, link }) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return this._request({
+      url: `${this._baseUrl}/cards`,
+      options: {
+        method: "POST",
+        headers: this._headers,
+        body: JSON.stringify({ name, link }),
+      },
+    });
+    /*  return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
@@ -74,11 +117,16 @@ export default class Api {
         return res.json();
       }
       return Promise.reject(`Error: ${res.status}`);
-    });
+    }); */
   }
 
   deleteCard(id) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
+    return this._request({
+      url: `${this._baseUrl}/cards/${id}`,
+      options: { method: "DELETE", headers: this._headers },
+    });
+
+    /* return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
@@ -86,11 +134,15 @@ export default class Api {
         return res.json();
       }
       return Promise.reject(`Error: ${res.status}`);
-    });
+    }); */
   }
 
   toggleLike(id, isLiked) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+    return this._request({
+      url: `${this._baseUrl}/cards/${id}/likes`,
+      options: { method: isLiked ? "DELETE" : "PUT", headers: this._headers },
+    });
+    /* return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: isLiked ? "DELETE" : "PUT",
       headers: this._headers,
     }).then((res) => {
@@ -98,6 +150,6 @@ export default class Api {
         return res.json();
       }
       return Promise.reject(`Error: ${res.status}`);
-    });
+    }); */
   }
 }
