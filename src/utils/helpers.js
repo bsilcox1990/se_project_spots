@@ -4,9 +4,23 @@ export function setButtonText(
   defaultText = "Save",
   loadingText = "Saving..."
 ) {
-  if (isLoading) {
-    btn.textContent = loadingText;
-  } else {
-    btn.textContent = defaultText;
-  }
+  btn.textContent = isLoading ? loadingText : defaultText;
+}
+
+export function handleSubmit(request, evt, loadingText = "Saving...") {
+  const submitButton = evt.submitter;
+  const initialText = submitButton.textContent;
+
+  setButtonText(submitButton, true, initialText, loadingText);
+
+  request()
+    .then(() => {
+      evt.target.reset();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      setButtonText(submitButton, false, initialText);
+    });
 }

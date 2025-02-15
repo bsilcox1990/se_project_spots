@@ -7,7 +7,7 @@ import {
 
 import "./index.css";
 import Api from "../utils/Api.js";
-import { setButtonText } from "../utils/helpers.js";
+import { setButtonText, handleSubmit } from "../utils/helpers.js";
 
 /*
 const initialCards = [
@@ -163,7 +163,7 @@ function getCardElement(data) {
     handleLikeButton(evt, data._id);
   });
 
-  cardDeleteButton.addEventListener("click", (evt) =>
+  cardDeleteButton.addEventListener("click", () =>
     handleDeleteCard(cardElement, data)
   );
 
@@ -176,7 +176,7 @@ editAvatarButton.addEventListener("click", () => {
 
 editAvatarForm.addEventListener("submit", (evt) => handleAvatarSubmit(evt));
 
-function handleAvatarSubmit(evt) {
+/* function handleAvatarSubmit(evt) {
   setButtonText(editAvatarSubmitButton, true);
   api
     .editAvatar(editAvatarInput.value)
@@ -192,6 +192,18 @@ function handleAvatarSubmit(evt) {
     .finally(() => {
       setButtonText(editAvatarSubmitButton, false);
     });
+}
+ */
+function handleAvatarSubmit(evt) {
+  function makeRequest() {
+    return api.editAvatar(editAvatarInput.value).then((data) => {
+      profileAvatar.src = data.avatar;
+      evt.target.reset();
+      disableButton(evt.submitter, settings);
+      closeModal(editAvatarModal);
+    });
+  }
+  handleSubmit(makeRequest, evt);
 }
 
 function handleLikeButton(evt, id) {
@@ -213,7 +225,7 @@ function handleDeleteCard(cardElement, data) {
   openModal(deleteModal);
 }
 
-function handleDeleteSubmit() {
+/* function handleDeleteSubmit() {
   setButtonText(deleteModalSubmitButton, true, "Delete", "Deleting...");
   api
     .deleteCard(selectedCardId)
@@ -227,6 +239,16 @@ function handleDeleteSubmit() {
     .finally(() => {
       setButtonText(deleteModalSubmitButton, false, "Delete");
     });
+} */
+
+function handleDeleteSubmit(evt) {
+  function makeRequest() {
+    return api.deleteCard(selectedCardId).then(() => {
+      selectedCard.remove();
+      closeModal(deleteModal);
+    });
+  }
+  handleSubmit(makeRequest, evt, "deleting...");
 }
 
 deleteForm.addEventListener("submit", handleDeleteSubmit);
@@ -235,7 +257,7 @@ deleteModalCancelButton.addEventListener("click", () => {
   closeModal(deleteModal);
 });
 
-function handleEditProfileFormSubmit() {
+/* function handleEditProfileFormSubmit() {
   setButtonText(editModalSubmitButton, true);
   api
     .editUserInfo({
@@ -252,9 +274,26 @@ function handleEditProfileFormSubmit() {
     .finally(() => {
       setButtonText(editModalSubmitButton, false);
     });
+} */
+
+function handleEditProfileFormSubmit(evt) {
+  function makeRequest() {
+    return api
+      .editUserInfo({
+        name: modalNameInput.value,
+        about: modalDescriptionInput.value,
+      })
+      .then((data) => {
+        profileName.textContent = data.name;
+        profileDescription.textContent = data.about;
+        disableButton(evt.submitter, settings);
+        closeModal(editModal);
+      });
+  }
+  handleSubmit(makeRequest, evt);
 }
 
-function handleAddProfileFormSubmit(evt) {
+/* function handleAddProfileFormSubmit(evt) {
   const inputValues = { name: addCaptionInput.value, link: addLinkInput.value };
   setButtonText(addModalSubmitButton, true);
   api
@@ -269,6 +308,19 @@ function handleAddProfileFormSubmit(evt) {
     .finally(() => {
       setButtonText(addModalSubmitButton, false);
     });
+} */
+
+function handleAddProfileFormSubmit(evt) {
+  function makeRequest() {
+    return api
+      .addNewCard({ name: addCaptionInput.value, link: addLinkInput.value })
+      .then((data) => {
+        renderCard(data);
+        disableButton(evt.submitter, settings);
+        closeModal(addModal);
+      });
+  }
+  handleSubmit(makeRequest, evt);
 }
 
 function fillProfileForm() {

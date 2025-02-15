@@ -96,7 +96,7 @@ export default class Api {
     }); */
   }
 
-  addNewcard({ name, link }) {
+  addNewCard({ name, link }) {
     return this._request({
       url: `${this._baseUrl}/cards`,
       options: {
