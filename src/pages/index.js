@@ -198,7 +198,6 @@ function handleAvatarSubmit(evt) {
   function makeRequest() {
     return api.editAvatar(editAvatarInput.value).then((data) => {
       profileAvatar.src = data.avatar;
-      evt.target.reset();
       disableButton(evt.submitter, settings);
       closeModal(editAvatarModal);
     });

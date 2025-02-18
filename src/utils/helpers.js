@@ -8,6 +8,8 @@ export function setButtonText(
 }
 
 export function handleSubmit(request, evt, loadingText = "Saving...") {
+  evt.preventDefault();
+
   const submitButton = evt.submitter;
   const initialText = submitButton.textContent;
 
